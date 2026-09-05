@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billy Jinlin Chen — Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F3F6FB;
+    --bg-panel: rgba(255, 255, 255, 0.62);
+    --bg-panel-solid: #FFFFFF;
+    --bg-raised: #E7ECF3;
+    --border: rgba(13, 40, 74, 0.13);
+    --border-strong: rgba(180, 83, 9, 0.5);
+    --gold: #B45309;
+    --gold-dim: rgba(245, 158, 11, 0.5);
+    --sky: #0284C7;
+    --sky-dim: rgba(56, 189, 248, 0.55);
+    --white: #0B1220;
+    --grey: #47536B;
+    --grey-dim: #8A93A8;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(2,132,199,0.09), transparent 42%),
+      radial-gradient(circle at 85% 75%, rgba(245,158,11,0.09), transparent 48%),
+      linear-gradient(rgba(13,40,74,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13,40,74,0.06) 1px, transparent 1px);
+    background-size: auto, auto, 44px 44px, 44px 44px;
+    background-position: 0 0, 0 0, -1px -1px, -1px -1px;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  ::selection{ background: var(--gold); color:#FFFFFF; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{ width:9px; }
+  ::-webkit-scrollbar-track{ background:#E7ECF3; }
+  ::-webkit-scrollbar-thumb{ background:#B7C2D4; border-radius:4px; }
+
+  /* ---------- Typography ---------- */
+  h1,h2,h3,h4{ font-family: var(--font-display); font-weight:600; letter-spacing:-0.01em; color:var(--white); }
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    color: var(--sky);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px; height:7px;
+    background: var(--gold);
+    display:inline-block;
+  }
+  .section-head{ max-width: 640px; margin-bottom: 48px; }
+  .section-head h2{ font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin-bottom:12px; }
+  .section-head p{ color: var(--grey); font-size:1rem; max-width:56ch; }
+
+  section{ padding: 110px 0; position:relative; }
+  section + section{ border-top: 1px solid var(--border); }
+
+  /* ---------- HUD panel / card system ---------- */
+  .hud-panel{
+    position:relative;
+    background: var(--bg-panel-solid);
+    border: 1px solid var(--border);
+    padding: 30px;
+  }
+  .hud-panel::before, .hud-panel::after,
+  .hud-corner-tl, .hud-corner-br{ content:''; position:absolute; width:16px; height:16px; pointer-events:none; }
+  .hud-panel::before{ top:-1px; left:-1px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
+  .hud-panel::after{ bottom:-1px; right:-1px; border-bottom:2px solid var(--sky); border-right:2px solid var(--sky); }
+
+  .tag-mono{
+    font-family: var(--font-mono);
+    font-size:0.7rem;
+    letter-spacing:0.08em;
+    color: var(--grey-dim);
+  }
+
+  /* ---------- Navbar ---------- */
+  header{
+    position: fixed; top:0; left:0; right:0; z-index:1000;
+    background: rgba(243,246,251,0.97);
+    border-bottom: 1px solid var(--border);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:1180px; margin:0 auto; padding: 16px 28px;
+  }
+  .brand{
+    font-family: var(--font-mono); font-size:0.92rem; color:var(--white);
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .dot{ width:8px; height:8px; background:var(--gold); }
+  .brand small{ color:var(--grey-dim); font-size:0.68rem; letter-spacing:0.08em; }
+
+  .nav-links{ display:flex; gap:34px; }
+  .nav-links a{
+    font-family: var(--font-mono); font-size:0.78rem; letter-spacing:0.04em;
+    color: var(--grey); position:relative; padding: 4px 0;
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover{ color: var(--sky); }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px;
+    background: var(--gold); transition: width 0.25s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+
+  .nav-cta{ display:flex; align-items:center; gap:14px; }
+  .icon-btn{
+    width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border); color:var(--grey);
+    transition: all 0.2s ease;
+  }
+  .icon-btn:hover{ color:var(--sky); border-color:var(--sky-dim); background:rgba(56,189,248,0.08); }
+  .icon-btn svg{ width:16px; height:16px; }
+
+  .menu-toggle{ display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
+  .menu-toggle span{ width:22px; height:2px; background:var(--white); }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family: var(--font-mono); font-size:0.78rem; letter-spacing:0.03em;
+    padding: 12px 20px; border:1px solid var(--border-strong);
+    color: var(--gold); background: rgba(245,158,11,0.06);
+    transition: all 0.2s ease; cursor:pointer;
+  }
+  .btn:hover{ background: var(--gold-dim); color:#FFFFFF; }
+  .btn.alt{ color: var(--sky); border-color: var(--sky-dim); background: rgba(56,189,248,0.06); }
+  .btn.alt:hover{ background: var(--sky-dim); color:#FFFFFF; }
+  .btn svg{ width:15px; height:15px; }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding: 168px 0 110px; position:relative; }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.25fr 0.85fr; gap:60px; align-items:center;
+  }
+  .telemetry-line{
+    font-family: var(--font-mono); font-size:0.72rem; color: var(--grey-dim);
+    letter-spacing:0.06em; margin-bottom: 22px; display:flex; gap:18px; flex-wrap:wrap;
+  }
+  .telemetry-line span{ color: var(--sky); }
+  .hero h1{
+    font-size: clamp(2.4rem, 5.4vw, 4rem); line-height:1.05; margin-bottom:18px;
+  }
+  .hero .sub{
+    font-family: var(--font-mono); font-size: 0.95rem; color: var(--sky);
+    margin-bottom: 22px; line-height:1.6;
+  }
+  .hero .intro{ color: var(--grey); max-width: 54ch; margin-bottom: 34px; font-size:1.02rem; }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; }
+
+  .hero-media{ position:relative; }
+  .hero-frame{
+    position:relative; aspect-ratio: 1/1; border:1px solid var(--border);
+    overflow:hidden; background: var(--bg-raised);
+  }
+  .hero-frame::before{ content:''; position:absolute; inset:0; border:1px solid transparent;
+    background: linear-gradient(135deg, rgba(56,189,248,0.5), transparent 30%, transparent 70%, rgba(245,158,11,0.5)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events:none; z-index:3;
+  }
+  .hero-frame .corner{ position:absolute; width:22px; height:22px; z-index:4; pointer-events:none; }
+  .hero-frame .corner.tl{ top:10px; left:10px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
+  .hero-frame .corner.br{ bottom:10px; right:10px; border-bottom:2px solid var(--sky); border-right:2px solid var(--sky); }
+  .hero-tag{
+    position:absolute; bottom:14px; left:14px; z-index:4;
+    font-family: var(--font-mono); font-size:0.65rem; letter-spacing:0.08em; color: var(--grey);
+    background: rgba(255,255,255,0.8); padding:5px 9px; border:1px solid var(--border);
+  }
+
+  /* ---------- Image frame / placeholder system ---------- */
+  .img-frame{
+    position:relative; overflow:hidden; border:1px solid var(--border);
+    background:
+      linear-gradient(115deg, transparent 40%, rgba(2,132,199,0.10) 50%, transparent 60%),
+      repeating-linear-gradient(45deg, #E7ECF3 0 12px, #DEE5EE 12px 24px);
+    background-size: 220% 220%, auto;
+    animation: skeleton-shift 3.4s ease-in-out infinite;
+  }
+  @keyframes skeleton-shift{
+    0%{ background-position: 0% 50%, 0 0; }
+    50%{ background-position: 100% 50%, 0 0; }
+    100%{ background-position: 0% 50%, 0 0; }
+  }
+  .img-frame img{
+    width:100%; height:100%; object-fit:cover; position:relative; z-index:2;
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    opacity:0;
+  }
+  .img-frame img.is-loaded{ opacity:1; }
+  .img-frame:hover img.is-loaded{ transform: scale(1.06); }
+  .img-placeholder{
+    position:absolute; inset:0; z-index:1;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    text-align:center; padding:14px;
+  }
+  .img-placeholder svg{ width:34px; height:34px; color: var(--grey-dim); opacity:0.8; }
+  .img-placeholder .ph-label{ font-family: var(--font-mono); font-size:0.66rem; letter-spacing:0.06em; color: var(--grey-dim); }
+  .img-placeholder .ph-path{ font-family: var(--font-mono); font-size:0.6rem; color: #AAB4C6; }
+  .img-frame.clickable{ cursor: zoom-in; }
+  .img-frame .expand-hint{
+    position:absolute; top:10px; right:10px; z-index:3;
+    width:28px; height:28px; display:flex; align-items:center; justify-content:center;
+    background: rgba(11,18,32,0.6); border:1px solid var(--border); opacity:0; transition: opacity 0.2s ease;
+  }
+  .img-frame.clickable:hover .expand-hint{ opacity:1; }
+  .img-frame .expand-hint svg{ width:14px; height:14px; color:#7DD3FC; opacity:1; }
+
+  /* ---------- About ---------- */
+  .about-grid{ display:grid; grid-template-columns: 0.9fr 1.1fr; gap:50px; align-items:start; }
+  .about-grid .hud-panel p{ color: var(--grey); margin-bottom:16px; font-size:1rem; }
+  .about-grid .hud-panel p:last-child{ margin-bottom:0; }
+  .stat-rail{ display:grid; gap:16px; }
+  .stat-box{
+    border:1px solid rgba(255,255,255,0.08); padding:18px 20px; background: #0B1220;
+  }
+  .stat-box .num{ font-family: var(--font-mono); color:#F59E0B; font-size:1.5rem; }
+  .stat-box .label{ font-family: var(--font-mono); font-size:0.68rem; color:#94A3B8; letter-spacing:0.06em; margin-top:4px; }
+
+  /* ---------- Skills ---------- */
+  .skills-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:24px; }
+  .skill-card h3{ font-size:1.15rem; margin-bottom:6px; }
+  .skill-card .tag-mono{ margin-bottom:20px; display:block; }
+  .skill-list{ display:flex; flex-direction:column; gap:11px; }
+  .skill-list li{
+    display:flex; align-items:baseline; gap:10px; font-size:0.9rem; color:var(--grey);
+    border-bottom: 1px dashed rgba(148,163,184,0.12); padding-bottom:11px;
+  }
+  .skill-list li:last-child{ border-bottom:none; padding-bottom:0; }
+  .skill-list li::before{ content:'▸'; color:var(--sky); font-size:0.75rem; }
+
+  /* ---------- Experience (card grid) ---------- */
+  .exp-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:24px; }
+  .exp-card{
+    display:flex; flex-direction:column; text-align:left; cursor:pointer;
+    background: var(--bg-panel-solid); border:1px solid var(--border);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    font-family: inherit; padding:0; width:100%;
+  }
+  .exp-card:hover{ border-color: var(--sky-dim); transform: translateY(-3px); }
+  .exp-card .img-frame{ aspect-ratio: 16/11; }
+  .exp-card .exp-card-body{ padding:24px; }
+  .exp-card .role-date{ font-family: var(--font-mono); font-size:0.72rem; color: var(--sky); margin-bottom:8px; display:block; }
+  .exp-card h3{ font-size:1.1rem; line-height:1.3; margin-bottom:4px; }
+  .exp-card .exp-card-role{ font-family: var(--font-mono); font-size:0.68rem; color:var(--grey-dim); letter-spacing:0.04em; margin-bottom:14px; display:block; }
+  .exp-card p{ color: var(--grey); font-size:0.9rem; margin-bottom:18px; }
+  .exp-card .open-log{
+    font-family: var(--font-mono); font-size:0.7rem; color:var(--gold);
+    display:flex; align-items:center; gap:6px; margin-top:auto;
+  }
+  .exp-card .open-log svg{ width:13px; height:13px; transition: transform 0.2s ease; }
+  .exp-card:hover .open-log svg{ transform: translateX(3px); }
+
+  /* ---------- Experience detail modal ---------- */
+  .exp-modal-backdrop{
+    position:fixed; inset:0; z-index:1500; background: rgba(11,18,32,0.55);
+    opacity:0; pointer-events:none; transition: opacity 0.25s ease;
+    display:flex; align-items:flex-start; justify-content:center;
+    padding: 60px 24px;
+  }
+  .exp-modal-backdrop.open{ opacity:1; pointer-events:auto; }
+  .exp-modal{
+    max-width: 880px; width:100%; max-height: 82vh; overflow-y:auto;
+    background: var(--bg-panel-solid); border:1px solid var(--border);
+    position:relative; transform: translateY(14px); transition: transform 0.25s ease;
+    box-shadow: 0 24px 60px rgba(11,18,32,0.18);
+  }
+  .exp-modal-backdrop.open .exp-modal{ transform: translateY(0); }
+  .exp-modal::before, .exp-modal::after{ content:''; position:absolute; width:18px; height:18px; pointer-events:none; }
+  .exp-modal::before{ top:-1px; left:-1px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
+  .exp-modal::after{ bottom:-1px; right:-1px; border-bottom:2px solid var(--sky); border-right:2px solid var(--sky); }
+  .exp-modal-head{ padding: 34px 40px 24px; border-bottom:1px solid var(--border); position:sticky; top:0; background: var(--bg-panel-solid); z-index:2; }
+  .exp-modal-head .role-date{ font-family: var(--font-mono); font-size:0.75rem; color:var(--sky); margin-bottom:8px; display:block; }
+  .exp-modal-head h3{ font-size:1.5rem; margin-bottom:4px; }
+  .exp-modal-head .exp-modal-role{ font-family: var(--font-mono); font-size:0.72rem; color:var(--grey-dim); letter-spacing:0.04em; }
+  .exp-modal-close{
+    position:absolute; top:24px; right:24px; width:38px; height:38px;
+    border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--white); background: rgba(243,246,251,0.9); z-index:3;
+  }
+  .exp-modal-close svg{ width:16px; height:16px; }
+  .exp-modal-body{ padding: 32px 40px 40px; }
+  .exp-modal-body > p{ color:var(--grey); margin-bottom:20px; }
+  .exp-gallery{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin: 4px 0 28px; }
+  .exp-gallery figure{ margin:0; }
+  .exp-gallery .img-frame{ aspect-ratio: 4/3; }
+  .exp-gallery figcaption{ font-family: var(--font-mono); font-size:0.65rem; color:var(--grey-dim); margin-top:8px; letter-spacing:0.03em; }
+  .subproj{ border-left:2px solid var(--border-strong); padding-left:20px; margin-bottom:28px; }
+  .subproj:last-child{ margin-bottom:0; }
+  .subproj h4{ font-size:1rem; color:var(--white); margin-bottom:6px; }
+  .subproj p{ color:var(--grey); font-size:0.94rem; margin-bottom:0; }
+  .subproj-media{ display:grid; grid-template-columns: 1.3fr 1fr; gap:22px; align-items:start; }
+  .subproj-media .subproj-text{ border-left:2px solid var(--border-strong); padding-left:20px; }
+  .subproj-media .subproj-text h4{ font-size:1rem; color:var(--white); margin-bottom:6px; }
+  .subproj-media .subproj-text p{ color:var(--grey); font-size:0.94rem; }
+  .subproj-media .media-col{ display:flex; flex-direction:column; gap:14px; }
+  .subproj-media .img-frame{ aspect-ratio: 4/3; }
+  .subproj-media figcaption{ font-family: var(--font-mono); font-size:0.63rem; color:var(--grey-dim); margin-top:8px; letter-spacing:0.03em; }
+  .subproj-media + .subproj-media{ margin-top:30px; }
+  .subproj-media:last-child{ margin-bottom:0; }
+  .video-frame{
+    position:relative; overflow:hidden; border:1px solid var(--border); aspect-ratio: 4/3;
+    background: var(--bg-raised);
+  }
+  .video-frame video{ width:100%; height:100%; object-fit:cover; display:block; }
+  .stack-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+  .stack-chip{
+    font-family: var(--font-mono); font-size:0.68rem; color:var(--grey);
+    border:1px solid var(--border); padding:5px 10px; letter-spacing:0.02em;
+  }
+
+  /* ---------- Projects ---------- */
+  .filter-row{ display:flex; gap:12px; margin-bottom:36px; flex-wrap:wrap; }
+  .filter-btn{
+    font-family: var(--font-mono); font-size:0.72rem; letter-spacing:0.05em;
+    padding:9px 16px; border:1px solid var(--border); color:var(--grey);
+    background:transparent; cursor:pointer; transition: all 0.2s ease;
+  }
+  .filter-btn:hover{ color:var(--sky); border-color:var(--sky-dim); }
+  .filter-btn.active{ color:#FFFFFF; background:var(--sky); border-color:var(--sky); }
+
+  .project-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:26px; }
+  .project-card{
+    display:flex; flex-direction:column; padding:0; width:100%;
+    background: var(--bg-panel-solid); border:1px solid var(--border);
+    font-family: inherit; cursor:pointer;
+    transition: opacity 0.3s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+  .project-card:hover{ border-color: var(--sky-dim); transform: translateY(-3px); }
+  .project-card.hidden{ display:none; }
+  .project-card .img-frame{ aspect-ratio: 16/10; }
+  .project-card .exp-card-body{ padding:24px; display:flex; flex-direction:column; flex:1; }
+  .project-card h3{ font-size:1.2rem; margin-bottom:6px; }
+  .project-card .tag-mono{ display:block; margin-bottom:12px; }
+  .project-card p.desc{ color:var(--grey); font-size:0.93rem; margin-bottom:16px; }
+
+  /* ---------- Education ---------- */
+  .edu-grid{ display:grid; grid-template-columns: 1.2fr 0.8fr 0.8fr; gap:24px; }
+  .edu-card h3{ font-size:1.1rem; margin-bottom:4px; }
+  .edu-card .role-date{ font-family: var(--font-mono); font-size:0.72rem; color:var(--sky); margin-bottom:16px; display:block; }
+  .edu-card ul{ display:flex; flex-direction:column; gap:10px; }
+  .edu-card ul li{ font-size:0.88rem; color:var(--grey); padding-left:16px; position:relative; }
+  .edu-card ul li::before{ content:'◆'; position:absolute; left:0; color:var(--gold); font-size:0.6rem; top:5px; }
+  .lang-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px dashed rgba(148,163,184,0.12); font-size:0.9rem; }
+  .lang-row:last-child{ border-bottom:none; }
+  .lang-row .level{ font-family: var(--font-mono); font-size:0.68rem; color:var(--sky); }
+
+  /* ---------- Contact / Footer ---------- */
+  .contact-panel{ text-align:center; padding: 60px 40px; }
+  .contact-panel h2{ font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom:16px; }
+  .contact-panel p{ color:var(--grey); max-width:52ch; margin:0 auto 34px; }
+  .contact-actions{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+
+  footer{ padding: 36px 0; }
+  .footer-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+  .footer-row .tag-mono{ color:var(--grey-dim); }
+  .footer-icons{ display:flex; gap:12px; }
+
+  /* ---------- Lightbox (intentionally dark for photo contrast) ---------- */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(6,10,18,0.92); z-index:2000;
+    display:flex; align-items:center; justify-content:center; padding:40px;
+    opacity:0; pointer-events:none; transition: opacity 0.25s ease;
+  }
+  .lightbox.open{ opacity:1; pointer-events:auto; }
+  .lightbox img{ max-width:min(90vw, 1100px); max-height:82vh; object-fit:contain; border:1px solid rgba(255,255,255,0.14); }
+  .lightbox-caption{ font-family: var(--font-mono); font-size:0.75rem; color:#B9C2D1; text-align:center; margin-top:16px; letter-spacing:0.04em; }
+  .lightbox-close{
+    position:absolute; top:26px; right:32px; width:40px; height:40px;
+    border:1px solid rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:#F3F6FB; background:rgba(255,255,255,0.08);
+  }
+  .lightbox-close svg{ width:18px; height:18px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-media{ order:-1; max-width:340px; margin:0 auto; }
+    .about-grid{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .project-grid{ grid-template-columns:1fr; }
+    .exp-grid{ grid-template-columns:1fr; }
+    .exp-modal-head, .exp-modal-body{ padding-left:24px; padding-right:24px; }
+    .exp-gallery{ grid-template-columns:1fr 1fr; }
+    .subproj-media{ grid-template-columns:1fr; }
+    .subproj-media .img-frame{ max-width:320px; }
+    .edu-grid{ grid-template-columns:1fr; }
+    .nav-links{ display:none; }
+    .menu-toggle{ display:flex; }
+  }
+  @media (max-width: 560px){
+    section{ padding:76px 0; }
+    .hero{ padding-top:130px; }
+    .exp-gallery{ grid-template-columns:1fr; }
+  }
+
+  .nav-links.mobile-open{
+    display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0;
+    background: rgba(243,246,251,0.98); border-bottom:1px solid var(--border); padding:20px 28px; gap:18px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#hero" class="brand"><span class="dot"></span>B. CHEN <small>// ENG. PHYSICS</small></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="icon-btn" href="http://www.linkedin.com/in/billy-chen-174462220" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z" opacity="0"/><path d="M6.5 9.5v9M6.5 6.5v.01M11 18.5v-5.2c0-1.6 1-2.8 2.7-2.8 1.6 0 2.8 1.1 2.8 2.8v5.2M11 18.5v-5.9M11 9.5v9"/></svg>
+      </a>
+      <a class="icon-btn" href="https://github.com/billygoogoohbob" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-2.85 17.54c.45.08.61-.2.61-.43v-1.7c-2.5.55-3.03-1.07-3.03-1.07-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.81 1.38 2.12.98 2.64.75.08-.59.32-.98.57-1.21-2-.23-4.1-1-4.1-4.45 0-.98.35-1.79.92-2.42-.09-.23-.4-1.15.09-2.4 0 0 .76-.24 2.48.92a8.5 8.5 0 0 1 4.52 0c1.72-1.16 2.48-.92 2.48-.92.49 1.25.18 2.17.09 2.4.57.63.92 1.44.92 2.42 0 3.46-2.11 4.22-4.12 4.44.33.28.62.85.62 1.71v2.53c0 .24.16.51.62.43A9 9 0 0 0 12 3z"/></svg>
+      </a>
+      <a class="icon-btn" href="mailto:billyjinlinchen@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5.5" width="17" height="13" rx="1"/><path d="M4 6.5 12 13l8-6.5"/></svg>
+      </a>
+      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
+        RESUME
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="telemetry-line">
+          <span>LAT 49.2827° N</span><span>LON 123.1207° W</span><span>STATUS: ACTIVE</span>
+        </div>
+        <h1>Billy Jinlin Chen</h1>
+        <p class="sub">Engineering Physics Undergraduate @ UBC — Autonomous Systems, Mechanical Prototyping &amp; Space Systems</p>
+        <p class="intro">Engineering Physics student at the University of British Columbia specializing in mechanical design, embedded systems, rapid prototyping, and space exploration technologies.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#projects">VIEW PROJECTS</a>
+          <a class="btn alt" href="#contact">GET IN TOUCH</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="hero-frame">
+          <div class="corner tl"></div>
+          <div class="corner br"></div>
+          <div class="img-frame" style="position:absolute; inset:0; border:none;">
+            <div class="img-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg>
+              <span class="ph-label">PROFILE HEADSHOT</span>
+              <span class="ph-path">images/profile-headshot.jpg</span>
+            </div>
+            <img src="images/profile-headshot.jpg" alt="Billy Jinlin Chen headshot" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <div class="hero-tag">CREW.01 // B.CHEN</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">SEC.01 // ABOUT</div>
+    <div class="about-grid">
+      <div class="hud-panel">
+        <p>I got into robotics the way most people do — by taking something apart and being disappointed I couldn't put it back together. Space hardware is what kept me hooked: machines that have to work the first time, with nobody around to fix them if they don't.</p>
+        <p>Most of my time now goes into SolidWorks or standing over a resin mold, chasing the gap between what the CAD says and what the physical part actually does. Wheels, suspensions, deployable payloads, robot legs — if it has to move reliably somewhere hostile, I want to be the one building it.</p>
+      </div>
+      <div class="stat-rail">
+        <div class="stat-box"><div class="num">4.33</div><div class="label">CUMULATIVE GPA — UBC ENGINEERING PHYSICS</div></div>
+        <div class="stat-box"><div class="num">12<span style="color:#94A3B8; font-size:1rem;">/27</span></div><div class="label">CIRC 2026 FINISH — 5 COMPETITION CHALLENGES</div></div>
+        <div class="stat-box"><div class="num">3</div><div class="label">LANGUAGES — EN / MANDARIN / KHMER</div></div>
+        <div class="stat-box"><div class="num">2030</div><div class="label">EXPECTED GRADUATION — B.A.Sc.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">SEC.02 // TOOLKIT</div>
+    <div class="section-head">
+      <h2>Engineering skills &amp; toolkit</h2>
+      <p>Domain-organized capabilities spanning mechanical design, embedded software, and control systems.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="hud-panel skill-card">
+        <h3>Mechanical Design &amp; Rapid Prototyping</h3>
+        <span class="tag-mono">DOMAIN 01 // HARDWARE</span>
+        <ul class="skill-list">
+          <li>SolidWorks — parametric 3D modeling, gear geometry, assemblies &amp; mating</li>
+          <li>3D printing (FDM / SLA)</li>
+          <li>Resin casting &amp; mold design</li>
+          <li>Waterjet cutting</li>
+          <li>Machining</li>
+          <li>Soldering</li>
+          <li>Rocker-bogie suspension design</li>
+          <li>Deployable systems engineering</li>
+        </ul>
+      </div>
+      <div class="hud-panel skill-card">
+        <h3>Software &amp; Embedded Systems</h3>
+        <span class="tag-mono">DOMAIN 02 // FIRMWARE</span>
+        <ul class="skill-list">
+          <li>C, C++, Python, MATLAB</li>
+          <li>Linux / CLI, Git &amp; GitHub</li>
+          <li>Arduino IDE, Arduino Nano, Raspberry Pi</li>
+          <li>Hardware-in-the-loop integration</li>
+          <li>Microcontroller systems (BSL)</li>
+          <li>Data analysis</li>
+        </ul>
+      </div>
+      <div class="hud-panel skill-card">
+        <h3>Control, Signals &amp; Vision</h3>
+        <span class="tag-mono">DOMAIN 03 // PERCEPTION</span>
+        <ul class="skill-list">
+          <li>Sensor integration — ultrasonic, cameras</li>
+          <li>Computer vision / image processing (OpenCV, color tracking)</li>
+          <li>PWM motor control</li>
+          <li>Circuit analysis</li>
+          <li>Numerical analysis &amp; linear algebra</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">SEC.03 // MISSION LOG</div>
+    <div class="section-head">
+      <h2>Experience &amp; leadership</h2>
+      <p>Hands-on engineering roles alongside operational leadership under real-world pressure.</p>
+    </div>
+
+    <div class="exp-grid">
+
+      <button class="exp-card hud-panel" data-exp="rover" style="text-align:left;">
+        <div class="img-frame">
+          <img src="images/rover-chassis-photo.jpg" alt="UBC Rover chassis in the field" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <div class="exp-card-body">
+          <span class="role-date">SEP 2025 — PRESENT</span>
+          <h3>UBC Rover Design Team</h3>
+          <span class="exp-card-role">Chassis &amp; Communications Subteam</span>
+          <p>Mechanical design and manufacturing for a semi-autonomous Mars rover — resin-cast wheels, rocker-bogie adapters, and a deployable comms relay, taken to a 12th/27 finish at CIRC 2026.</p>
+          <span class="open-log">OPEN MISSION LOG <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </button>
+
+      <button class="exp-card hud-panel" data-exp="elections" style="text-align:left;">
+        <div class="img-frame">
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 10.5l2.5 2.5L16 8"/></svg>
+            <span class="ph-label">ELECTIONS CANADA</span>
+            <span class="ph-path">images/elections-canada.jpg</span>
+          </div>
+          <img src="images/elections-canada.jpg" alt="Elections Canada operations" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <div class="exp-card-body">
+          <span class="role-date">SEP 2021 — APR 2025</span>
+          <h3>Elections Canada</h3>
+          <span class="exp-card-role">Elections Supervisor</span>
+          <p>Ran voting-site operations and post-election auditing for municipal and federal elections under strict regulatory compliance.</p>
+          <span class="open-log">OPEN MISSION LOG <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </button>
+
+      <button class="exp-card hud-panel" data-exp="volunteer" style="text-align:left;">
+        <div class="img-frame">
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/><path d="M3 5l2 2M21 5l-2 2" opacity="0"/></svg>
+            <span class="ph-label">CAMBODIA VOLUNTEER</span>
+            <span class="ph-path">images/cambodia-volunteer.jpg</span>
+          </div>
+          <img src="images/cambodia-volunteer.jpg" alt="Volunteer teaching in Cambodia" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <div class="exp-card-body">
+          <span class="role-date">NOV 2022 — DEC 2024</span>
+          <h3>International Volunteer &amp; Language Instructor</h3>
+          <span class="exp-card-role">Cambodia</span>
+          <p>Two years of full-time missionary service in Cambodia — weekly instruction, program direction, and cross-cultural teamwork, building working fluency in Khmer.</p>
+          <span class="open-log">OPEN MISSION LOG <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE DETAIL MODAL ================= -->
+<div class="exp-modal-backdrop" id="expModalBackdrop">
+  <div class="exp-modal">
+    <div class="exp-modal-close" id="expModalClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg></div>
+    <div id="expModalInner"></div>
+  </div>
+</div>
+
+<!-- Templates: full in-depth content for each role, cloned into the modal on open -->
+<template id="tpl-rover">
+  <div class="exp-modal-head">
+    <span class="role-date">SEP 2025 — PRESENT</span>
+    <h3>UBC Rover Design Team</h3>
+    <span class="exp-modal-role">Chassis &amp; Communications Subteam</span>
+  </div>
+  <div class="exp-modal-body">
+    <p>I'm on the chassis and communications side of the team, building the semi-autonomous rovers we take to competitions like the University Rover Challenge and CIRC. Most of what I do splits between mechanical design in CAD and actually building the thing — wheels, suspension, and now a deployable relay module.</p>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Resin-Casted 3D Printed Wheels</h4>
+        <p>This was one of the problems already sitting on the team's plate when I joined — the existing TPU-printed wheels weren't holding up, and fixing that became my task. I moved to a resin-cast urethane wheel over a 3D-printed hex hub, picking Shore 30A for grip and shock absorption, with a multi-part mold designed for repeatable, concentric pours. The first pour worked almost perfectly, just a little leakage around the seams. The real finding came later, once we'd actually driven on them for a while: Shore 30A doesn't hold up long-term, so the next revision moves to a harder compound to get more life out of each wheel.</p>
+      </div>
+      <div class="media-col">
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="Wheel mold — SolidWorks assembly, mold cavity and hex-spoke hub">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/wheel-mold-cad.png" alt="Wheel mold CAD assembly" style="object-fit:contain; background:#fff;" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.01 — Mold CAD assembly</figcaption>
+        </figure>
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="Finished resin-cast wheel — urethane tread over 3D-printed hex hub">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/rover-wheel-mold.jpg" alt="Finished resin-cast wheel" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.02 — Finished wheel</figcaption>
+        </figure>
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="Mini validation rover — comparing wheel prototypes before scaling up">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/mini-rover-wheels.jpg" alt="Mini rover with wheel prototypes" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.03 — Mini rover validation</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Rocker-Bogie &amp; Suspension Adapters</h4>
+        <p>Rocker-bogie is the part of the chassis that actually keeps all six wheels on the ground over broken terrain, so I treated the joint geometry as the thing most worth getting right. I modeled the suspension adapters in SolidWorks with weight as the main constraint — every extra gram on the arm assembly is a gram the drivetrain has to fight against on a slope.</p>
+      </div>
+      <div class="media-col">
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="Suspension adapter — SolidWorks part model">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/bogie-adapter-cad.png" alt="Rocker-bogie suspension adapter CAD" style="object-fit:contain; background:#fff;" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.04 — Adapter CAD model</figcaption>
+        </figure>
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="Full rover chassis with rocker-bogie suspension deployed, field test">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/rover-chassis-photo.jpg" alt="Rover chassis with rocker-bogie suspension" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.05 — Chassis in the field</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Deployable Communications Relay System</h4>
+        <p>I'm leading this one end to end, and it's been the steepest learning curve of anything I've worked on with the team. Designing the servo-driven rack-and-pinion release mechanism took the most CAD iterations by far — getting the geometry to actually release cleanly under load wasn't obvious the first, second, or third pass. Wiring and integrating the internal payload (Raspberry Pi, LiFePO4 pack, BMS, buck converters, external antenna) meant learning a lot of that electronics work from scratch, and getting the software talking reliably to the hardware was its own separate fight. The claw-arm docking interface that holds the unit to the chassis in transit is the one piece I'd still call unfinished — it works, but it needs another pass before I'd trust it in a competition run.</p>
+      </div>
+      <div class="media-col">
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="Relay enclosure — SolidWorks assembly with internal antenna mount">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/relay-cad.png" alt="Relay enclosure CAD" style="object-fit:contain; background:#fff;" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.06 — Enclosure CAD model</figcaption>
+        </figure>
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="Assembled relay prototype — deployable legs and external antenna">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/relay.jpg" alt="Assembled relay prototype" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.07 — Assembled prototype</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>CIRC 2026 — Mission Ops</h4>
+        <p>Contributed to mission planning, FMEA-based risk assessment, and real-time task management, helping the team finish 12th of 27 across five competition challenges. When the primary robotic arm failed mid-run, built a standalone wire cutter from spare claw components and a razor blade on the spot to keep the task alive.</p>
+      </div>
+      <div class="media-col">
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="UBC Rover team at CIRC 2026">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img src="images/rover-team.jpg" alt="UBC Rover Design Team at CIRC 2026" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.08 — Team &amp; field testing</figcaption>
+        </figure>
+        <figure>
+          <div class="video-frame">
+            <video controls playsinline preload="metadata" poster="images/rover-moving-circ-poster.jpg">
+              <source src="images/rover-moving-circ.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>FIG.09 — Rover driving at CIRC 2026</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="stack-row">
+      <span class="stack-chip">SolidWorks</span>
+      <span class="stack-chip">Resin Casting</span>
+      <span class="stack-chip">Rapid Prototyping</span>
+      <span class="stack-chip">Telecom Hardware</span>
+      <span class="stack-chip">Mechanical Assembly</span>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-elections">
+  <div class="exp-modal-head">
+    <span class="role-date">SEP 2021 — APR 2025</span>
+    <h3>Elections Canada</h3>
+    <span class="exp-modal-role">Elections Supervisor</span>
+  </div>
+  <div class="exp-modal-body">
+    <p>Supervised voting-site operations across municipal and federal elections, balancing tight statutory deadlines with strict regulatory compliance — a four-year role that ran in parallel with the start of engineering studies and shaped how I plan for failure ahead of high-stakes, one-shot events like competition day.</p>
+
+    <div class="exp-gallery" style="grid-template-columns: 1fr;">
+      <figure>
+        <div class="img-frame clickable" data-lightbox data-caption="Elections Canada — voting site operations">
+          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 10.5l2.5 2.5L16 8"/></svg>
+            <span class="ph-label">ELECTIONS CANADA</span>
+            <span class="ph-path">images/elections-canada.jpg</span>
+          </div>
+          <img src="images/elections-canada.jpg" alt="Elections Canada operations" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <figcaption>FIG.01 — Site operations</figcaption>
+      </figure>
+    </div>
+
+    <div class="subproj">
+      <h4>Site Operations &amp; Logistics</h4>
+      <p>Oversaw voting site operations, supply chain logistics, staff onboarding, and staff management, ensuring every site opened on time and stayed compliant with federal and municipal regulatory requirements through the full election-day cycle.</p>
+    </div>
+    <div class="subproj">
+      <h4>Post-Election Auditing &amp; Troubleshooting</h4>
+      <p>Executed post-election ballot reconciliation and auditing, and handled real-time equipment troubleshooting under high-stakes conditions where an unresolved fault had no second attempt.</p>
+    </div>
+
+    <div class="stack-row">
+      <span class="stack-chip">Operations Management</span>
+      <span class="stack-chip">Logistics</span>
+      <span class="stack-chip">Regulatory Compliance</span>
+      <span class="stack-chip">Auditing</span>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-volunteer">
+  <div class="exp-modal-head">
+    <span class="role-date">NOV 2022 — DEC 2024</span>
+    <h3>International Volunteer &amp; Language Instructor</h3>
+    <span class="exp-modal-role">Cambodia</span>
+  </div>
+  <div class="exp-modal-body">
+    <p>Completed two years of full-time missionary service for The Church of Jesus Christ of Latter-day Saints in Cambodia — a structured, full-time placement built around instructing weekly classes and directing community education programs, while acquiring working fluency in Khmer. It's a sustained cross-cultural commitment that built the adaptability, communication, and self-discipline I now bring to a multidisciplinary engineering team.</p>
+
+    <div class="exp-gallery" style="grid-template-columns: 1fr;">
+      <figure>
+        <div class="img-frame clickable" data-lightbox data-caption="Volunteer teaching and community work in Cambodia">
+          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg>
+            <span class="ph-label">CAMBODIA VOLUNTEER</span>
+            <span class="ph-path">images/cambodia-volunteer.jpg</span>
+          </div>
+          <img src="images/cambodia-volunteer.jpg" alt="Volunteer teaching in Cambodia" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <figcaption>FIG.01 — Community teaching</figcaption>
+      </figure>
+    </div>
+
+    <div class="subproj">
+      <h4>Full-Time Missionary Service</h4>
+      <p>Served as a full-time missionary for The Church of Jesus Christ of Latter-day Saints, living under a demanding daily schedule with no days off for the two-year term. That structure built a level of discipline, resilience, and self-management that transfers directly to engineering work — showing up and executing on a fixed schedule regardless of setbacks, the same mindset that matters when a competition run doesn't go to plan.</p>
+    </div>
+    <div class="subproj">
+      <h4>Language Instruction &amp; Community Education</h4>
+      <p>Instructed weekly classes and directed community education programs over the two-year placement, working entirely in a second language and adapting lesson delivery to a wide range of learners.</p>
+    </div>
+    <div class="subproj">
+      <h4>Operations &amp; Peer Training</h4>
+      <p>Managed daily operations, trained peer volunteers, and ran public outreach across diverse community groups — coordinating logistics and people with no formal chain of command to lean on.</p>
+    </div>
+
+    <div class="stack-row">
+      <span class="stack-chip">Cross-Cultural Collaboration</span>
+      <span class="stack-chip">Instruction</span>
+      <span class="stack-chip">Program Direction</span>
+      <span class="stack-chip">Discipline &amp; Resilience</span>
+      <span class="stack-chip">Khmer (Working Proficiency)</span>
+    </div>
+  </div>
+</template>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">SEC.04 // PAYLOADS</div>
+    <div class="section-head">
+      <h2>Featured projects</h2>
+      <p>Independent and competition builds spanning embedded robotics, CAD-driven mechanical design, and applied physics.</p>
+    </div>
+
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-filter="all">ALL</button>
+      <button class="filter-btn" data-filter="robotics">ROBOTICS</button>
+      <button class="filter-btn" data-filter="cad">CAD / MECHANICAL</button>
+      <button class="filter-btn" data-filter="embedded">EMBEDDED / SOFTWARE</button>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+
+      <button class="project-card hud-panel" data-tags="robotics embedded" data-exp="spider" style="text-align:left;">
+        <div class="img-frame">
+          <img src="images/hexapod-spider-robot.jpg" alt="Autonomous hexapod spider robot" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <div class="exp-card-body">
+          <span class="tag-mono">SENIOR CAPSTONE PROJECT</span>
+          <h3>Autonomous Hexapod Spider Robot</h3>
+          <p class="desc">Embedded systems, kinematics &amp; computer vision — a six-legged autonomous platform with real-time vision tracking and obstacle avoidance.</p>
+          <div class="stack-row" style="margin-bottom:18px;">
+            <span class="stack-chip">Python</span><span class="stack-chip">Raspberry Pi</span><span class="stack-chip">OpenCV</span><span class="stack-chip">Servo Kinematics</span>
+          </div>
+          <span class="open-log">VIEW BUILD LOG &amp; SCHEMATICS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </button>
+
+      <button class="project-card hud-panel" data-tags="cad" data-exp="physics" style="text-align:left;">
+        <div class="img-frame">
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v13M12 5l5 6-5 2M6 21c2-1.5 4-1.5 6 0s4 1.5 6 0"/></svg>
+            <span class="ph-label">SAILBOAT</span>
+            <span class="ph-path">images/sailboat-prototype.jpg</span>
+          </div>
+          <img src="images/sailboat-prototype.jpg" alt="Crosswind-optimized sailboat prototype" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <div class="exp-card-body">
+          <span class="tag-mono">HIGH SCHOOL PHYSICS COMPETITION</span>
+          <h3>Competitive Physics Prototypes</h3>
+          <p class="desc">Fluid dynamics and momentum-transfer prototypes designed and fabricated for physics club competitions.</p>
+          <div class="stack-row" style="margin-bottom:18px;">
+            <span class="stack-chip">Mechanical Design</span><span class="stack-chip">Fluid Dynamics</span><span class="stack-chip">Fabrication</span>
+          </div>
+          <span class="open-log">VIEW BUILD LOG &amp; PHOTOS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- Templates: full in-depth content for each project, cloned into the shared detail modal on open -->
+<template id="tpl-spider">
+  <div class="exp-modal-head">
+    <span class="role-date">SENIOR CAPSTONE PROJECT</span>
+    <h3>Autonomous Hexapod Spider Robot</h3>
+    <span class="exp-modal-role">Raspberry Pi &amp; OpenCV / Python Computer Vision</span>
+  </div>
+  <div class="exp-modal-body">
+    <p>My senior capstone project, and honestly my first real introduction to embedded systems and Python — a six-legged spider robot that walks on its own and tracks a target using vision.</p>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Embedded Hardware Integration</h4>
+        <p>This project doubled as my introduction to embedded systems — I'd never worked with a Raspberry Pi or written real Python before this, so wiring six legs' worth of servos and a pair of ultrasonic sensors into it was as much a lesson in patience as it was in circuitry.</p>
+      </div>
+      <figure>
+        <div class="img-frame clickable" data-lightbox data-caption="Hexapod spider robot mid-build — servos, legs, and ultrasonic sensor pair wired to the Raspberry Pi">
+          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+          <img src="images/hexapod-spider-robot.jpg" alt="Hexapod spider robot mid-build" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <figcaption>FIG.01 — Assembly &amp; wiring</figcaption>
+      </figure>
+    </div>
+
+    <div class="subproj">
+      <h4>Computer Vision Algorithm</h4>
+      <p>Getting the color-tracking loop to actually work reliably was the biggest setback of the build. It was also my first real Python project, so a lot of the early versions just didn't track anything useful before I landed on a color-threshold approach — scanning the live camera feed for concentrations of red and calculating a heading toward them — that held up under normal lighting.</p>
+    </div>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Autonomous Target Tracking</h4>
+        <p>Once the tracking was reliable, I tied it into the leg-kinematics code and the servo PWM control so the robot could actually walk toward what it was tracking — following a target and holding a set distance from it without losing its gait.</p>
+      </div>
+      <figure>
+        <div class="video-frame">
+          <video controls playsinline preload="metadata" poster="images/hexapod-spider-robot-video-poster.jpg">
+            <source src="images/hexapod-spider-robot-video.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption>FIG.02 — Walking &amp; tracking demo</figcaption>
+      </figure>
+    </div>
+
+    <div class="stack-row">
+      <span class="stack-chip">Python</span>
+      <span class="stack-chip">Raspberry Pi</span>
+      <span class="stack-chip">OpenCV / Color Tracking</span>
+      <span class="stack-chip">Servo Kinematics</span>
+      <span class="stack-chip">Ultrasonic Sensing</span>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-physics">
+  <div class="exp-modal-head">
+    <span class="role-date">HIGH SCHOOL PHYSICS COMPETITION</span>
+    <h3>Competitive Physics Prototypes</h3>
+    <span class="exp-modal-role">Secondary School Physics Club — Mechanical &amp; Fluid Dynamics Prototypes</span>
+  </div>
+  <div class="exp-modal-body">
+    <p>Two builds from a high school physics club, back when I was first figuring out that I liked building things more than just calculating them.</p>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Crosswind-Optimized Sailboat</h4>
+        <p>Designed and built a lightweight sailboat hull optimized to maximize propulsion force from perpendicular crosswinds, balancing sail geometry against hull drag.</p>
+      </div>
+      <figure>
+        <div class="img-frame clickable" data-lightbox data-caption="Crosswind-optimized sailboat prototype">
+          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v13M12 5l5 6-5 2M6 21c2-1.5 4-1.5 6 0s4 1.5 6 0"/></svg>
+            <span class="ph-label">SAILBOAT</span>
+            <span class="ph-path">images/sailboat-prototype.jpg</span>
+          </div>
+          <img src="images/sailboat-prototype.jpg" alt="Crosswind-optimized sailboat prototype" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <figcaption>FIG.01 — Sailboat prototype</figcaption>
+      </figure>
+    </div>
+
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Mass-Ejection Powered Vehicle</h4>
+        <p>Engineered a kinetic vehicle powered by rapid mass ejection, balancing impulse dynamics and mass vectoring to demonstrate momentum-transfer principles under competition constraints.</p>
+      </div>
+      <figure>
+        <div class="img-frame clickable" data-lightbox data-caption="Mass-ejection powered vehicle prototype">
+          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+          <div class="img-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="10" width="12" height="6" rx="1"/><path d="M16 12h4l-2 2-2-2Z"/></svg>
+            <span class="ph-label">EJECTION VEHICLE</span>
+            <span class="ph-path">images/mass-ejection-vehicle.jpg</span>
+          </div>
+          <img src="images/mass-ejection-vehicle.jpg" alt="Mass-ejection powered vehicle" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <figcaption>FIG.02 — Mass-ejection vehicle prototype</figcaption>
+      </figure>
+    </div>
+
+    <div class="stack-row">
+      <span class="stack-chip">Mechanical Design</span>
+      <span class="stack-chip">Fluid Dynamics</span>
+      <span class="stack-chip">Impulse &amp; Momentum</span>
+      <span class="stack-chip">Fabrication</span>
+    </div>
+  </div>
+</template>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education">
+  <div class="wrap">
+    <div class="eyebrow">SEC.05 // CREDENTIALS</div>
+    <div class="section-head">
+      <h2>Education, awards &amp; languages</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="hud-panel edu-card">
+        <h3>University of British Columbia</h3>
+        <span class="role-date">Expected June 2030</span>
+        <ul>
+          <li>Bachelor of Applied Science (B.A.Sc.) in Engineering Physics</li>
+          <li>Cumulative GPA: 4.33</li>
+        </ul>
+      </div>
+      <div class="hud-panel edu-card">
+        <h3>Academic Honors &amp; Awards</h3>
+        <span class="role-date">2021 — 2025</span>
+        <ul>
+          <li>High School Valedictorian — 100% overall average, 100% AP Calculus</li>
+          <li>Governor General's Bronze Academic Medal</li>
+          <li>Duke of Edinburgh Bronze Award</li>
+        </ul>
+      </div>
+      <div class="hud-panel edu-card">
+        <h3>Languages</h3>
+        <div class="lang-row"><span>English</span><span class="level">NATIVE</span></div>
+        <div class="lang-row"><span>Mandarin</span><span class="level">FLUENT</span></div>
+        <div class="lang-row"><span>Khmer</span><span class="level">PROFESSIONAL</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap">
+    <div class="hud-panel contact-panel">
+      <div class="eyebrow" style="justify-content:center;">SEC.06 // TRANSMISSION</div>
+      <h2>Let's build something that works the first time.</h2>
+      <p>Open to co-op placements, internships, and collaborations in robotics, aerospace hardware, and embedded systems. Reach out directly — I read every message.</p>
+      <div class="contact-actions">
+        <a class="btn" href="mailto:billyjinlinchen@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5.5" width="17" height="13" rx="1"/><path d="M4 6.5 12 13l8-6.5"/></svg>
+          billyjinlinchen@gmail.com
+        </a>
+        <a class="btn alt" href="http://www.linkedin.com/in/billy-chen-174462220" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.5 9.5v9M6.5 6.5v.01M11 18.5v-5.2c0-1.6 1-2.8 2.7-2.8 1.6 0 2.8 1.1 2.8 2.8v5.2M11 18.5v-5.9M11 9.5v9"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn alt" href="https://github.com/billygoogoohbob" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-2.85 17.54c.45.08.61-.2.61-.43v-1.7c-2.5.55-3.03-1.07-3.03-1.07-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.81 1.38 2.12.98 2.64.75.08-.59.32-.98.57-1.21-2-.23-4.1-1-4.1-4.45 0-.98.35-1.79.92-2.42-.09-.23-.4-1.15.09-2.4 0 0 .76-.24 2.48.92a8.5 8.5 0 0 1 4.52 0c1.72-1.16 2.48-.92 2.48-.92.49 1.25.18 2.17.09 2.4.57.63.92 1.44.92 2.42 0 3.46-2.11 4.22-4.12 4.44.33.28.62.85.62 1.71v2.53c0 .24.16.51.62.43A9 9 0 0 0 12 3z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <span class="tag-mono">© 2026 BILLY JINLIN CHEN // TRANSMISSION END</span>
+    <div class="footer-icons">
+      <a class="icon-btn" href="mailto:billyjinlinchen@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5.5" width="17" height="13" rx="1"/><path d="M4 6.5 12 13l8-6.5"/></svg></a>
+      <a class="icon-btn" href="http://www.linkedin.com/in/billy-chen-174462220" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.5 9.5v9M6.5 6.5v.01M11 18.5v-5.2c0-1.6 1-2.8 2.7-2.8 1.6 0 2.8 1.1 2.8 2.8v5.2M11 18.5v-5.9M11 9.5v9"/></svg></a>
+      <a class="icon-btn" href="https://github.com/billygoogoohbob" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-2.85 17.54c.45.08.61-.2.61-.43v-1.7c-2.5.55-3.03-1.07-3.03-1.07-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.81 1.38 2.12.98 2.64.75.08-.59.32-.98.57-1.21-2-.23-4.1-1-4.1-4.45 0-.98.35-1.79.92-2.42-.09-.23-.4-1.15.09-2.4 0 0 .76-.24 2.48.92a8.5 8.5 0 0 1 4.52 0c1.72-1.16 2.48-.92 2.48-.92.49 1.25.18 2.17.09 2.4.57.63.92 1.44.92 2.42 0 3.46-2.11 4.22-4.12 4.44.33.28.62.85.62 1.71v2.53c0 .24.16.51.62.43A9 9 0 0 0 12 3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= LIGHTBOX ================= -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-close" id="lightboxClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6 6 18"/></svg></div>
+  <div>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<script>
+  // ---------- Mobile nav ----------
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => navLinks.classList.toggle('mobile-open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('mobile-open')));
+
+  // ---------- Smooth scroll (native + fallback) ----------
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ---------- Experience detail modal ----------
+  const expBackdrop = document.getElementById('expModalBackdrop');
+  const expInner = document.getElementById('expModalInner');
+  const expClose = document.getElementById('expModalClose');
+
+  function openExpModal(key) {
+    const tpl = document.getElementById('tpl-' + key);
+    if (!tpl) return;
+    expInner.innerHTML = '';
+    expInner.appendChild(tpl.content.cloneNode(true));
+    expBackdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    expBackdrop.querySelector('.exp-modal').scrollTop = 0;
+    // re-wire lightbox triggers inside the freshly injected content
+    expInner.querySelectorAll('[data-lightbox]').forEach(frame => {
+      frame.addEventListener('click', () => {
+        const img = frame.querySelector('img');
+        if (img && img.classList.contains('is-loaded')) {
+          openLightbox(img.src, frame.dataset.caption || '');
+        }
+      });
+    });
+  }
+  function closeExpModal() {
+    expBackdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('[data-exp]').forEach(card => {
+    card.addEventListener('click', () => openExpModal(card.dataset.exp));
+  });
+  expClose.addEventListener('click', closeExpModal);
+  expBackdrop.addEventListener('click', e => { if (e.target === expBackdrop) closeExpModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && expBackdrop.classList.contains('open')) closeExpModal(); });
+
+  // ---------- Project filtering ----------
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      projectCards.forEach(card => {
+        const tags = card.dataset.tags.split(' ');
+        card.classList.toggle('hidden', filter !== 'all' && !tags.includes(filter));
+      });
+    });
+  });
+
+  // ---------- Lightbox ----------
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(src, caption) {
+    lightboxImg.src = src;
+    lightboxCaption.textContent = caption || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  document.querySelectorAll('[data-lightbox]').forEach(frame => {
+    frame.addEventListener('click', () => {
+      const img = frame.querySelector('img');
+      const caption = frame.dataset.caption || '';
+      if (img && img.classList.contains('is-loaded')) {
+        openLightbox(img.src, caption);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
