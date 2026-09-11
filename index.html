@@ -301,8 +301,11 @@
   .img-frame .expand-hint svg{ width:14px; height:14px; color:#7DD3FC; opacity:1; }
 
   /* ---------- About ---------- */
-  .about-single{ max-width: 760px; }
-  .about-single .hud-panel p{ color: var(--grey); margin-bottom:16px; font-size:1rem; }
+  .about-layout{ display:grid; grid-template-columns: 0.6fr 1.4fr; gap:40px; align-items:start; }
+  #about .eyebrow{ position:sticky; top:80px; z-index:2; }
+  .about-heading{ position:sticky; top:110px; }
+  .about-single{ max-width: 980px; margin: 0 0 0 auto; }
+  .about-single .hud-panel p{ color: var(--grey); margin-bottom:20px; font-size:1.15rem; line-height:1.7; }
   .about-single .hud-panel p:last-child{ margin-bottom:0; }
 
   /* ---------- Core skills (integrated into About) ---------- */
@@ -482,6 +485,10 @@
     .hero-grid{ grid-template-columns:1fr; }
     .hero-media{ order:-1; max-width:340px; margin:0 auto; }
     .hero-moon{ width:220px; height:220px; top:6%; right:6%; }
+    .about-layout{ grid-template-columns:1fr; }
+    .about-heading{ position:static; }
+    #about .eyebrow{ position:static; }
+    .about-single{ margin:0; max-width:100%; }
     .exp-modal-head, .exp-modal-body{ padding-left:24px; padding-right:24px; }
     .exp-gallery{ grid-template-columns:1fr 1fr; }
     .subproj-media .img-frame{ max-width:320px; }
@@ -560,12 +567,7 @@
           <div class="corner tl"></div>
           <div class="corner br"></div>
           <div class="img-frame" style="position:absolute; inset:0; border:none;">
-            <div class="img-placeholder">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg>
-              <span class="ph-label">PROFILE HEADSHOT</span>
-              <span class="ph-path">images/profile-headshot.jpg</span>
-            </div>
-            <img src="images/profile-headshot.jpg" alt="Billy Jinlin Chen headshot" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+            <img src="Photos/profile-headshot.jpg" alt="Billy Jinlin Chen headshot" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
           </div>
           <div class="hero-tag">CREW.01 // B.CHEN</div>
         </div>
@@ -578,20 +580,26 @@
 <section id="about">
   <div class="wrap">
     <div class="eyebrow">SEC.01 // ABOUT</div>
-    <div class="section-head">
-      <h2>About Me</h2>
-    </div>
-    <div class="about-single">
-      <div class="hud-panel">
-        <p>Two things shaped my path into engineering: seeing the Milky Way for the first time as a kid and realizing how little of the universe we've actually explored, and watching Mark Rober videos that sparked my love for robotics and space exploration.</p>
-        <p>Now I'm an Engineering Physics student at the University of British Columbia, finally building the math and practical skills to match that spark. On the UBC Rover team, I spend most of my time in the shop or in CAD, from designing resin-casted wheels and prototyping rocker-bogie suspension adapters, to wiring up avionics for deployable relay modules. I like experimenting and working on hardware that solves real world problems. My long-term goal is to work on robotic systems and exploration vehicles that help push humanity a little further into space.</p>
-        <div class="core-skills">
-          <span class="stack-chip">SolidWorks</span>
-          <span class="stack-chip">Python &amp; C++</span>
-          <span class="stack-chip">Raspberry Pi / Embedded</span>
-          <span class="stack-chip">Resin Casting &amp; Rapid Prototyping</span>
-          <span class="stack-chip">Computer Vision (OpenCV)</span>
-          <span class="stack-chip">PWM &amp; Motor Control</span>
+    <div class="about-layout">
+      <div class="about-heading">
+        <div class="section-head">
+          <h2>About Me</h2>
+        </div>
+      </div>
+      <div class="about-single">
+        <div class="hud-panel">
+          <p>Two things shaped my path into engineering: seeing the Milky Way for the first time as a kid and realizing how little of the universe we've actually explored, and watching Mark Rober videos that sparked my love for robotics and space exploration.</p>
+          <p>Now I'm an Engineering Physics student at the University of British Columbia, finally building the math and practical skills to match that spark. On the UBC Rover team, I spend most of my time in the shop or in CAD, from designing resin-casted wheels and prototyping rocker-bogie suspension adapters, to wiring up avionics for deployable relay modules. I like experimenting and working on hardware that solves real world problems. My long-term goal is to work on robotic systems and exploration vehicles that help push humanity a little further into space.</p>
+          <div class="core-skills">
+            <span class="stack-chip">SolidWorks</span>
+            <span class="stack-chip">Python &amp; C++</span>
+            <span class="stack-chip">Raspberry Pi / Embedded</span>
+            <span class="stack-chip">Resin Casting &amp; Rapid Prototyping</span>
+            <span class="stack-chip">Computer Vision (OpenCV)</span>
+            <span class="stack-chip">PWM &amp; Motor Control</span>
+            <span class="stack-chip">Waterjet Cutting</span>
+            <span class="stack-chip">MATLAB</span>
+          </div>
         </div>
       </div>
     </div>
@@ -643,7 +651,7 @@
 
       <button class="exp-card hud-panel" data-exp="volunteer" style="text-align:left;">
         <div class="img-frame">
-          <img loading="lazy" src="Photos/mission-photo.webp" alt="Missionary group photo in Cambodia" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          <img loading="lazy" src="Photos/mission-presentation.jpg" alt="Billy presenting at a mission conference in Cambodia" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
         </div>
         <div class="exp-card-body">
           <span class="role-date">NOV 2022 — DEC 2024</span>
@@ -805,21 +813,6 @@
   <div class="exp-modal-body">
     <p>Supervised voting-site operations across municipal and federal elections, balancing tight statutory deadlines with strict regulatory compliance. It was a four-year role that ran in parallel with the start of engineering studies and shaped how I plan for failure ahead of high-stakes, one-shot events like competition day.</p>
 
-    <div class="exp-gallery" style="grid-template-columns: 1fr;">
-      <figure>
-        <div class="img-frame clickable" data-lightbox data-caption="Elections Canada — voting site operations">
-          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
-          <div class="img-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 10.5l2.5 2.5L16 8"/></svg>
-            <span class="ph-label">ELECTIONS CANADA</span>
-            <span class="ph-path">images/elections-canada.jpg</span>
-          </div>
-          <img src="images/elections-canada.jpg" alt="Elections Canada operations" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
-        </div>
-        <figcaption>FIG.01 — Site operations</figcaption>
-      </figure>
-    </div>
-
     <div class="subproj">
       <h4>Site Operations &amp; Logistics</h4>
       <p>Oversaw voting site operations, supply chain logistics, staff onboarding, and staff management, ensuring every site opened on time and stayed compliant with federal and municipal regulatory requirements through the full election-day cycle.</p>
@@ -856,9 +849,18 @@
       </figure>
     </div>
 
-    <div class="subproj">
-      <h4>Full-Time Missionary Service</h4>
-      <p>Served as a full-time missionary for The Church of Jesus Christ of Latter-day Saints, living under a demanding daily schedule with no days off for the two-year term. That structure built a level of discipline, resilience, and self-management that transfers directly to engineering work: showing up and executing on a fixed schedule regardless of setbacks, the same mindset that matters when a competition run doesn't go to plan.</p>
+    <div class="subproj-media">
+      <div class="subproj-text">
+        <h4>Full-Time Missionary Service</h4>
+        <p>Served as a full-time missionary for The Church of Jesus Christ of Latter-day Saints, living under a demanding daily schedule with no days off for the two-year term. That structure built a level of discipline, resilience, and self-management that transfers directly to engineering work: showing up and executing on a fixed schedule regardless of setbacks, the same mindset that matters when a competition run doesn't go to plan.</p>
+      </div>
+      <figure>
+        <div class="img-frame clickable" data-lightbox data-caption="Serving alongside the local community in rural Cambodia">
+          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+          <img loading="lazy" src="Photos/mission-service.webp" alt="Community service in rural Cambodia" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+        </div>
+        <figcaption>FIG.02 — Community service</figcaption>
+      </figure>
     </div>
 
     <div class="subproj-media">
@@ -866,13 +868,22 @@
         <h4>Language Instruction &amp; Community Education</h4>
         <p>Instructed weekly classes and directed community education programs over the two-year placement, working entirely in a second language and adapting lesson delivery to a wide range of learners.</p>
       </div>
-      <figure>
-        <div class="img-frame clickable" data-lightbox data-caption="English class whiteboard — daily routines lesson, Khmer translations">
-          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
-          <img loading="lazy" src="Photos/english-class.webp" alt="English class whiteboard lesson" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
-        </div>
-        <figcaption>FIG.02 — Lesson whiteboard</figcaption>
-      </figure>
+      <div class="media-col">
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="English class whiteboard — daily routines lesson, Khmer translations">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img loading="lazy" src="Photos/english-class.webp" alt="English class whiteboard lesson" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.03 — Lesson whiteboard</figcaption>
+        </figure>
+        <figure>
+          <div class="img-frame clickable" data-lightbox data-caption="With students after class, Cambodia">
+            <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
+            <img loading="lazy" src="Photos/mission-english-class.webp" alt="With English class students in Cambodia" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          </div>
+          <figcaption>FIG.04 — With the class</figcaption>
+        </figure>
+      </div>
     </div>
 
     <div class="subproj">
@@ -925,12 +936,7 @@
 
       <button class="project-card hud-panel" data-tags="cad" data-exp="physics" style="text-align:left;">
         <div class="img-frame">
-          <div class="img-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v13M12 5l5 6-5 2M6 21c2-1.5 4-1.5 6 0s4 1.5 6 0"/></svg>
-            <span class="ph-label">SAILBOAT</span>
-            <span class="ph-path">images/sailboat-prototype.jpg</span>
-          </div>
-          <img src="images/sailboat-prototype.jpg" alt="Crosswind-optimized sailboat prototype" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
+          <img src="Photos/kwatlen-science-challenge.jpg" alt="Kwatlen Science Challenge" loading="lazy" style="object-fit:contain; background:#fff;" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
         </div>
         <div class="exp-card-body">
           <span class="tag-mono">HIGH SCHOOL PHYSICS COMPETITION</span>
@@ -1018,42 +1024,14 @@
   <div class="exp-modal-body">
     <p>Two builds from a high school physics club, back when I was first figuring out that I liked building things more than just calculating them.</p>
 
-    <div class="subproj-media">
-      <div class="subproj-text">
-        <h4>Crosswind-Optimized Sailboat</h4>
-        <p>Designed and built a lightweight sailboat hull optimized to maximize propulsion force from perpendicular crosswinds, balancing sail geometry against hull drag.</p>
-      </div>
-      <figure>
-        <div class="img-frame clickable" data-lightbox data-caption="Crosswind-optimized sailboat prototype">
-          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
-          <div class="img-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v13M12 5l5 6-5 2M6 21c2-1.5 4-1.5 6 0s4 1.5 6 0"/></svg>
-            <span class="ph-label">SAILBOAT</span>
-            <span class="ph-path">images/sailboat-prototype.jpg</span>
-          </div>
-          <img src="images/sailboat-prototype.jpg" alt="Crosswind-optimized sailboat prototype" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
-        </div>
-        <figcaption>FIG.01 — Sailboat prototype</figcaption>
-      </figure>
+    <div class="subproj">
+      <h4>Crosswind-Optimized Sailboat</h4>
+      <p>Designed and built a lightweight sailboat hull optimized to maximize propulsion force from perpendicular crosswinds, balancing sail geometry against hull drag.</p>
     </div>
 
-    <div class="subproj-media">
-      <div class="subproj-text">
-        <h4>Mass-Ejection Powered Vehicle</h4>
-        <p>Engineered a kinetic vehicle powered by rapid mass ejection, balancing impulse dynamics and mass vectoring to demonstrate momentum-transfer principles under competition constraints.</p>
-      </div>
-      <figure>
-        <div class="img-frame clickable" data-lightbox data-caption="Mass-ejection powered vehicle prototype">
-          <div class="expand-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6"/></svg></div>
-          <div class="img-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="4" y="10" width="12" height="6" rx="1"/><path d="M16 12h4l-2 2-2-2Z"/></svg>
-            <span class="ph-label">EJECTION VEHICLE</span>
-            <span class="ph-path">images/mass-ejection-vehicle.jpg</span>
-          </div>
-          <img src="images/mass-ejection-vehicle.jpg" alt="Mass-ejection powered vehicle" onload="this.classList.add('is-loaded')" onerror="this.style.display='none'">
-        </div>
-        <figcaption>FIG.02 — Mass-ejection vehicle prototype</figcaption>
-      </figure>
+    <div class="subproj">
+      <h4>Mass-Ejection Powered Vehicle</h4>
+      <p>Engineered a kinetic vehicle powered by rapid mass ejection, balancing impulse dynamics and mass vectoring to demonstrate momentum-transfer principles under competition constraints.</p>
     </div>
 
     <div class="stack-row">
@@ -1085,7 +1063,7 @@
         <h3>Academic Honors &amp; Awards</h3>
         <span class="role-date">2021 — 2025</span>
         <ul>
-          <li>High School Valedictorian — 100% overall average, 100% AP Calculus</li>
+          <li>High School Valedictorian — 100% overall average</li>
           <li>Governor General's Bronze Academic Medal</li>
           <li>Duke of Edinburgh Bronze Award</li>
         </ul>
