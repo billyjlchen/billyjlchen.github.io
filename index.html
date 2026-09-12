@@ -240,8 +240,8 @@
 
   .hero-media{ position:relative; }
   .hero-moon{
-    position:absolute; top:10%; right:6%; width:400px; height:400px;
-    z-index:-1; opacity:0.92; pointer-events:none;
+    position:fixed; top:10%; right:6%; width:400px; height:400px;
+    z-index:-1; opacity:0.92; pointer-events:none; will-change: transform;
   }
   .hero-moon img{ position:relative; width:100%; height:100%; display:block; }
   .hero-frame{
@@ -512,6 +512,7 @@
 <div id="skyGradient"></div>
 <div id="nebulaTint"></div>
 <div class="parallax-layer" id="parallaxFar"></div>
+<div class="hero-moon"><img loading="lazy" src="Photos/moon-graphic.png" alt="" role="presentation"></div>
 <div class="parallax-layer" id="parallaxNear"></div>
 
 
@@ -546,7 +547,6 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="hero">
-  <div class="hero-moon"><img loading="lazy" src="Photos/moon-graphic.png" alt="" role="presentation"></div>
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-text">
@@ -1145,6 +1145,7 @@
     const y = window.scrollY;
     if (parallaxNear) parallaxNear.style.transform = `translateY(${y * 0.12}px)`;
     if (parallaxFar) parallaxFar.style.transform = `translateY(${y * 0.05}px)`;
+    if (heroMoon) heroMoon.style.transform = `translateY(${y * 0.08}px)`;
 
     // Hero's own content moves up and fades away within its sticky dwell zone;
     // About only starts entering the viewport once this zone is fully scrolled past.
@@ -1154,10 +1155,6 @@
       if (heroWrap) {
         heroWrap.style.transform = `translateY(${-heroProgress * 140}px)`;
         heroWrap.style.opacity = String(1 - heroProgress);
-      }
-      if (heroMoon) {
-        heroMoon.style.transform = `translateY(${-heroProgress * 70}px)`;
-        heroMoon.style.opacity = String(0.95 - heroProgress * 0.95);
       }
     }
 
