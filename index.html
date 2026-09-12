@@ -348,11 +348,12 @@
   }
   .exp-modal-backdrop.open{ opacity:1; pointer-events:auto; }
   .exp-modal{
-    max-width: 880px; width:100%; max-height: 82vh; overflow-y:auto;
+    max-width: 880px; width:100%; max-height: 82vh;
     background: var(--bg-panel-solid); border:1px solid var(--border);
     position:relative; transform: translateY(14px); transition: transform 0.25s ease;
     box-shadow: 0 24px 60px rgba(10,8,30,0.35);
   }
+  #expModalInner{ max-height: 82vh; overflow-y:auto; }
   .exp-modal-backdrop.open .exp-modal{ transform: translateY(0); }
   .exp-modal::before, .exp-modal::after{ content:''; position:absolute; width:18px; height:18px; pointer-events:none; }
   .exp-modal::before{ top:-1px; left:-1px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
@@ -1207,7 +1208,7 @@
     expBackdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
     const modalEl = expBackdrop.querySelector('.exp-modal');
-    modalEl.scrollTop = 0;
+    expInner.scrollTop = 0;
     // re-wire lightbox triggers inside the freshly injected content
     expInner.querySelectorAll('[data-lightbox]').forEach(frame => {
       frame.addEventListener('click', () => {
@@ -1229,7 +1230,7 @@
             entry.target.pause();
           }
         });
-      }, { root: modalEl, threshold: 0.5 });
+      }, { root: expInner, threshold: 0.5 });
       videosInModal.forEach(v => activeVideoObserver.observe(v));
     }
   }
